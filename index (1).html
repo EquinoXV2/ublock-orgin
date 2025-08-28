@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>about:blank Embedder</title>
+  <style>
+    body {
+      background: black;
+      color: white;
+      font-family: sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+      padding: 2em;
+      position: relative;
+    }
+    input {
+      padding: 0.5em;
+      width: 400px;
+      margin-bottom: 1em;
+    }
+    button {
+      padding: 0.5em 1em;
+      margin: 0 0.5em;
+      cursor: pointer;
+    }
+    #preview-frame {
+      width: 1920px;
+      height: 1080px;
+      border: none;
+      margin-top: 2em;
+    }
+
+    /* Console styles */
+    #console {
+      position: fixed;
+      top: 10px;
+      right: 10px;
+      width: 250px;
+      max-height: 400px;
+      background: rgba(0,0,0,0.8);
+      border: 1px solid #63de00;
+      padding: 10px;
+      overflow-y: auto;
+      font-size: 12px;
+      display: flex;
+      flex-direction: column;
+      z-index: 9999;
+    }
+    #console-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+      font-weight: bold;
+      color: #63de00;
+      margin-bottom: 5px;
+    }
+    #console-body {
+      flex: 1;
+      overflow-y: auto;
+    }
+    #clear-console {
+      opacity: 0;
+      position: absolute;
+      bottom: 5px;
+      left: 5px;
+      width: 1px;
+      height: 1px;
+    }
+  </style>
+</head>
+<body>
+  <h1>about:blank Embedder</h1>
+  <input id="url-target" type="text" value="https://" />
+  <div>
+    <button id="preview">Preview</button>
+    <button id="create">Create page</button>
+    <button onclick="resetInput()">Clear</button>
+  </div>
+
+  <iframe id="preview-frame"></iframe>
+
+  <!-- Console -->
+  <div id="console">
+    <div id="console-header">Console [+]</div>
+    <div id="console-body"></div>
+    <button id="clear-console">Clear console</button>
+  </div>
+
+  <script>
+    const urlInput = document.getElementById("url-target");
+    const previewFrame = document.getElementById("preview-frame");
+    const consoleDiv = document.getElementById("console-body");
+    const consoleHeader = document.getElementById("console-header");
+    const clearConsoleBtn = document.getElementById("clear-console");
+    const prefix = "https://";
+
+    // Keep https:// undeletable
+    urlInput.addEventListener("keydown", (e) => {
+      if ((urlInput.selectionStart < prefix.length && e.key !== "ArrowLeft" && e.key !== "ArrowRight" && e.key !== "Tab") ||
+          (e.key === "Backspace" && urlInput.selectionStart <= prefix.length)) {
+        e.preventDefault();
+      }
+    });
+
+    // Fix pasted URLs to remove extra https:// or http://
+    urlInput.addEventListener("paste", (e) => {
+      e.preventDefault();
+      let paste = (e.clipboardData || window.clipboardData).getData('text');
+      paste = paste.replace(/^https?:\/\//i, '');
+      urlInput.value = prefix + paste;
+      logToConsole("Pasted URL: " + urlInput.value);
+    });
+
+    function getFullURL() {
+      return urlInput.value;
+    }
+
+    function resetInput() {
+      urlInput.value = prefix;
+      previewFrame.src = "";
+      logToConsole("Input cleared");
+    }
+
+    // Logging function
+    function logToConsole(msg) {
+      const p = document.createElement("p");
+      p.textContent = msg;
+      consoleDiv.appendChild(p);
+      consoleDiv.scrollTop = consoleDiv.scrollHeight;
+    }
+
+    // Preview button
+    document.getElementById("preview").onclick = function () {
+      previewFrame.src = getFullURL();
+      logToConsole("Preview: " + getFullURL());
+    };
+
+    // Create page button
+    document.getElementById("create").onclick = function () {
+      const url = getFullURL();
+      const win = window.open();
+      win.document.body.style.margin = "0";
+      win.document.body.style.height = "100vh";
+
+      const iframe = win.document.createElement("iframe");
+      iframe.style.border = "none";
+      iframe.style.width = "100%";
+      iframe.style.height = "100%";
+      iframe.referrerPolicy = "no-referrer";
+      iframe.allow = "fullscreen";
+      iframe.src = url;
+
+      win.document.body.appendChild(iframe);
+      logToConsole("Created page: " + url);
+    };
+
+    // Console toggle
+    let consoleOpen = true;
+    consoleHeader.onclick = () => {
+      consoleOpen = !consoleOpen;
+      document.getElementById("console-body").style.display = consoleOpen ? "block" : "none";
+      consoleHeader.textContent = "Console " + (consoleOpen ? "[+]" : "[-]");
+    };
+
+    // Invisible clear console button
+    clearConsoleBtn.addEventListener("click", () => {
+      consoleDiv.innerHTML = "";
+      logToConsole("Console cleared");
+    });
+  </script>
+</body>
+</html>
