@@ -1,0 +1,103 @@
+body {
+    background-color: #0a0a0a;
+    color: #39ff14;
+    font-family: 'JetBrains Mono', monospace;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    overflow: hidden;
+    position: relative;
+}
+
+.terminal {
+    width: 80%;
+    max-width: 800px;
+    background-color: #1a1a1a;
+    border: 1px solid #39ff14;
+    border-radius: 5px;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(57, 255, 20, 0.5);
+    position: relative;
+    overflow: hidden;
+}
+
+.input-area {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+input[type="text"] {
+    flex: 1;
+    padding: 10px;
+    margin-right: 10px;
+    border: 1px solid #39ff14;
+    border-radius: 5px;
+    background-color: #1a1a1a;
+    color: #39ff14;
+    font-size: 16px;
+}
+
+button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    background-color: #39ff14;
+    color: #0a0a0a;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+button:hover {
+    background-color: #2a2a2a;
+    color: #39ff14;
+    box-shadow: 0 0 10px rgba(57, 255, 20, 0.5);
+}
+
+.status-window {
+    height: 300px;
+    overflow-y: auto;
+    background-color: #1a1a1a;
+    border: 1px solid #39ff14;
+    border-radius: 5px;
+    padding: 10px;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+.status-window::-webkit-scrollbar {
+    width: 8px;
+}
+
+.status-window::-webkit-scrollbar-thumb {
+    background-color: #39ff14;
+    border-radius: 4px;
+}
+
+.status-window::-webkit-scrollbar-track {
+    background-color: #1a1a1a;
+}
+
+body::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(rgba(57, 255, 20, 0.1) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(57, 255, 20, 0.1) 1px, transparent 1px);
+    background-size: 20px 20px;
+    opacity: 0.5;
+    animation: scanline 2s linear infinite;
+    z-index: -1;
+}
+
+@keyframes scanline {
+    0% { transform: translateY(-100%); }
+    100% { transform: translateY(100%); }
+}
