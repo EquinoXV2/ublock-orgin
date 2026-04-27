@@ -1,7 +1,7 @@
 body {
-    background-color: #0a0a0a;
-    color: #39ff14;
-    font-family: 'JetBrains Mono', monospace;
+    background-color: #f0f0f0;
+    color: #333;
+    font-family: 'Arial', sans-serif;
     margin: 0;
     padding: 0;
     display: flex;
@@ -14,12 +14,12 @@ body {
 
 .terminal {
     width: 80%;
-    max-width: 800px;
-    background-color: #1a1a1a;
-    border: 1px solid #39ff14;
+    max-width: 400px;
+    background-color: #fff;
+    border: 1px solid #ddd;
     border-radius: 5px;
     padding: 20px;
-    box-shadow: 0 0 10px rgba(57, 255, 20, 0.5);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     position: relative;
     overflow: hidden;
 }
@@ -34,10 +34,10 @@ input[type="text"] {
     flex: 1;
     padding: 10px;
     margin-right: 10px;
-    border: 1px solid #39ff14;
+    border: 1px solid #ddd;
     border-radius: 5px;
-    background-color: #1a1a1a;
-    color: #39ff14;
+    background-color: #fff;
+    color: #333;
     font-size: 16px;
 }
 
@@ -45,24 +45,22 @@ button {
     padding: 10px 20px;
     border: none;
     border-radius: 5px;
-    background-color: #39ff14;
-    color: #0a0a0a;
+    background-color: #007bff;
+    color: #fff;
     font-size: 16px;
     cursor: pointer;
     transition: all 0.3s ease;
 }
 
 button:hover {
-    background-color: #2a2a2a;
-    color: #39ff14;
-    box-shadow: 0 0 10px rgba(57, 255, 20, 0.5);
+    background-color: #0056b3;
 }
 
 .status-window {
     height: 300px;
     overflow-y: auto;
-    background-color: #1a1a1a;
-    border: 1px solid #39ff14;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
     border-radius: 5px;
     padding: 10px;
     font-size: 14px;
@@ -74,30 +72,10 @@ button:hover {
 }
 
 .status-window::-webkit-scrollbar-thumb {
-    background-color: #39ff14;
+    background-color: #ddd;
     border-radius: 4px;
 }
 
 .status-window::-webkit-scrollbar-track {
-    background-color: #1a1a1a;
-}
-
-body::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(rgba(57, 255, 20, 0.1) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(57, 255, 20, 0.1) 1px, transparent 1px);
-    background-size: 20px 20px;
-    opacity: 0.5;
-    animation: scanline 2s linear infinite;
-    z-index: -1;
-}
-
-@keyframes scanline {
-    0% { transform: translateY(-100%); }
-    100% { transform: translateY(100%); }
+    background-color: #f9f9f9;
 }
