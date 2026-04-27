@@ -15,6 +15,8 @@ document.getElementById('connectButton').addEventListener('click', () => {
         .then(data => {
             statusWindow.innerHTML += `Connected to ${url}.<br>`;
             statusWindow.innerHTML += data;
+            // Open the content in a new tab
+            window.open(`about:blank`, '_blank').document.write(data);
         })
         .catch(error => {
             statusWindow.innerHTML += `Failed to connect to ${url}.<br>`;
