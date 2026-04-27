@@ -1,7 +1,7 @@
 {
   "name": "retro-tech-terminal",
   "version": "1.0.0",
-  "description": "A retro-tech terminal web application for bypassing content filters.",
+  "description": "made by ai",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
